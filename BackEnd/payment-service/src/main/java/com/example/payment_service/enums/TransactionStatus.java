@@ -8,6 +8,5 @@ public enum TransactionStatus {
     VALIDATED,
     REJECTED,
     COMPLETED,
-    FRAUD_SUSPECTED
+    PENDING_MANUAL_REVIEW
 }
-

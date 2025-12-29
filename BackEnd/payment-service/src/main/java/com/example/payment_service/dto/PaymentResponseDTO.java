@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * DTO pour la réponse de virement
@@ -16,9 +15,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PaymentResponse {
+public class PaymentResponseDTO {
 
-    private UUID transactionId;
+    private Long id;
+    private String sourceAccountId;
+    private String destinationIban;
+    private Double amount;
     private TransactionStatus status;
     private String message;
     private LocalDateTime createdAt;
