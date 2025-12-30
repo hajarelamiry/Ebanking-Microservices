@@ -183,6 +183,25 @@ public class AuditController {
     }
 
     /**
+     * Endpoint pour recevoir les logs via Feign Client (Eureka)
+     * Utilisé par Payment Service et Crypto Service
+     */
+    @PostMapping("/log")
+    public ResponseEntity<Map<String, Object>> receiveLogViaFeign(
+            @Valid @RequestBody AuditEventDTO eventDTO
+    ) {
+        AuditLog savedLog = auditService.receiveEventFromService(eventDTO);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Audit log received via Feign Client");
+        response.put("auditLogId", savedLog.getId());
+        response.put("timestamp", savedLog.getTimestamp());
+        response.put("correlationId", savedLog.getCorrelationId());
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    /**
      * Health check
      */
     @GetMapping("/health")

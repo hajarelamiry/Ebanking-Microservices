@@ -6,6 +6,7 @@ import com.example.payment_service.dto.PaymentResponseDTO;
 import com.example.payment_service.enums.TransactionStatus;
 import com.example.payment_service.model.Payment;
 import com.example.payment_service.repository.PaymentRepository;
+import com.example.payment_service.service.AuditService;
 import com.example.payment_service.service.EventPublisher;
 import com.example.payment_service.service.FraudDetectionService;
 import com.example.payment_service.service.PaymentService;
@@ -28,6 +29,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final FraudDetectionService fraudDetectionService;
     private final EventPublisher eventPublisher;
+    private final AuditService auditService; // Pour communication synchrone via Eureka/Feign
 
     @Override
     @Transactional
@@ -53,8 +55,13 @@ public class PaymentServiceImpl implements PaymentService {
         payment = paymentRepository.save(payment);
         log.info("Transaction enregistrée avec l'ID: {} et le statut: {}", payment.getId(), payment.getStatus());
 
-        // 4. Publication de l'événement d'audit dans la table outbox (dans la même transaction)
+        // 4. Publication de l'événement d'audit
+        // 4a. Via Kafka (asynchrone, Transactional Outbox Pattern)
         publishPaymentCreatedEvent(payment, initialStatus, message);
+        
+        // 4b. Via Feign Client/Eureka (synchrone, optionnel)
+        // Décommenter si vous voulez aussi envoyer via Feign en plus de Kafka
+        // sendAuditEventViaFeign(payment, initialStatus, message);
 
         // 5. Simulation d'appel au legacy-adapter-service (seulement si PENDING)
         if (initialStatus == TransactionStatus.PENDING) {
@@ -159,6 +166,40 @@ public class PaymentServiceImpl implements PaymentService {
                 "PAYMENT_VALIDATED",
                 auditEvent
         );
+    }
+
+    /**
+     * Envoie un événement d'audit via Feign Client (Eureka) en plus de Kafka
+     * Optionnel : peut être utilisé pour une communication synchrone
+     */
+    private void sendAuditEventViaFeign(Payment payment, TransactionStatus status, String message) {
+        String eventType = switch (status) {
+            case REJECTED -> "PAYMENT_REJECTED";
+            case PENDING_MANUAL_REVIEW -> "PAYMENT_PENDING_MANUAL_REVIEW";
+            default -> "PAYMENT_CREATED";
+        };
+        
+        String auditStatus = (status == TransactionStatus.REJECTED) ? "FAILURE" : "SUCCESS";
+        
+        AuditEventDTO auditEvent = AuditEventDTO.builder()
+                .correlationId(CorrelationIdContext.getCorrelationId())
+                .userId(payment.getSourceAccountId())
+                .actionType(eventType)
+                .serviceName("payment-service")
+                .description("Payment transaction " + status.name().toLowerCase())
+                .status(auditStatus)
+                .errorMessage(status == TransactionStatus.REJECTED ? message : null)
+                .timestamp(LocalDateTime.now())
+                .paymentId(payment.getId())
+                .sourceAccountId(payment.getSourceAccountId())
+                .destinationIban(payment.getDestinationIban())
+                .amount(payment.getAmount())
+                .transactionType(payment.getType().name())
+                .transactionStatus(payment.getStatus().name())
+                .build();
+        
+        // Envoie via Feign Client (Eureka découvre automatiquement audit-service)
+        auditService.sendAuditEvent(auditEvent);
     }
 }
 

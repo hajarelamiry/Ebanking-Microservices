@@ -4,7 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.MDCFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -19,6 +19,7 @@ import java.util.UUID;
  */
 @Component
 @Order(1)
+@Slf4j
 public class CorrelationIdFilter extends OncePerRequestFilter {
 
     private static final String CORRELATION_ID_HEADER = "X-Correlation-ID";
@@ -55,9 +56,9 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
         String correlationId = request.getHeader(CORRELATION_ID_HEADER);
         if (correlationId == null || correlationId.trim().isEmpty()) {
             correlationId = UUID.randomUUID().toString();
-            logger.debug("Generated new correlation ID: {}", correlationId);
+            log.debug("Generated new correlation ID: {}", correlationId);
         } else {
-            logger.debug("Using existing correlation ID: {}", correlationId);
+            log.debug("Using existing correlation ID: {}", correlationId);
         }
         return correlationId;
     }
