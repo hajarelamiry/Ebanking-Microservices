@@ -1,16 +1,21 @@
 package com.example.payment_service.service.impl;
 
+import com.example.payment_service.dto.AuditEventDTO;
 import com.example.payment_service.dto.PaymentRequestDTO;
 import com.example.payment_service.dto.PaymentResponseDTO;
 import com.example.payment_service.enums.TransactionStatus;
 import com.example.payment_service.model.Payment;
 import com.example.payment_service.repository.PaymentRepository;
+import com.example.payment_service.service.EventPublisher;
 import com.example.payment_service.service.FraudDetectionService;
 import com.example.payment_service.service.PaymentService;
+import com.example.payment_service.util.CorrelationIdContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 /**
  * Implémentation du service de gestion des paiements
@@ -22,6 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final FraudDetectionService fraudDetectionService;
+    private final EventPublisher eventPublisher;
 
     @Override
     @Transactional
@@ -47,7 +53,10 @@ public class PaymentServiceImpl implements PaymentService {
         payment = paymentRepository.save(payment);
         log.info("Transaction enregistrée avec l'ID: {} et le statut: {}", payment.getId(), payment.getStatus());
 
-        // 4. Simulation d'appel au legacy-adapter-service (seulement si PENDING)
+        // 4. Publication de l'événement d'audit dans la table outbox (dans la même transaction)
+        publishPaymentCreatedEvent(payment, initialStatus, message);
+
+        // 5. Simulation d'appel au legacy-adapter-service (seulement si PENDING)
         if (initialStatus == TransactionStatus.PENDING) {
             simulateLegacyAdapterCall(payment);
         }
@@ -82,6 +91,74 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setStatus(TransactionStatus.VALIDATED);
         paymentRepository.save(payment);
         log.info("Statut de la transaction {} mis à jour: {}", payment.getId(), TransactionStatus.VALIDATED);
+        
+        // Publication de l'événement d'audit pour la validation
+        publishPaymentValidatedEvent(payment);
+    }
+
+    /**
+     * Publie un événement d'audit lors de la création d'un paiement
+     */
+    private void publishPaymentCreatedEvent(Payment payment, TransactionStatus status, String message) {
+        String eventType = switch (status) {
+            case REJECTED -> "PAYMENT_REJECTED";
+            case PENDING_MANUAL_REVIEW -> "PAYMENT_PENDING_MANUAL_REVIEW";
+            default -> "PAYMENT_CREATED";
+        };
+        
+        String auditStatus = (status == TransactionStatus.REJECTED) ? "FAILURE" : "SUCCESS";
+        
+        AuditEventDTO auditEvent = AuditEventDTO.builder()
+                .correlationId(CorrelationIdContext.getCorrelationId())
+                .userId(payment.getSourceAccountId())
+                .actionType(eventType)
+                .serviceName("payment-service")
+                .description("Payment transaction " + status.name().toLowerCase())
+                .status(auditStatus)
+                .errorMessage(status == TransactionStatus.REJECTED ? message : null)
+                .timestamp(LocalDateTime.now())
+                .paymentId(payment.getId())
+                .sourceAccountId(payment.getSourceAccountId())
+                .destinationIban(payment.getDestinationIban())
+                .amount(payment.getAmount())
+                .transactionType(payment.getType().name())
+                .transactionStatus(payment.getStatus().name())
+                .build();
+        
+        eventPublisher.publishEvent(
+                "Payment",
+                payment.getId().toString(),
+                eventType,
+                auditEvent
+        );
+    }
+
+    /**
+     * Publie un événement d'audit lors de la validation d'un paiement
+     */
+    private void publishPaymentValidatedEvent(Payment payment) {
+        AuditEventDTO auditEvent = AuditEventDTO.builder()
+                .correlationId(CorrelationIdContext.getCorrelationId())
+                .userId(payment.getSourceAccountId())
+                .actionType("PAYMENT_VALIDATED")
+                .serviceName("payment-service")
+                .description("Payment transaction validated by legacy adapter")
+                .status("SUCCESS")
+                .timestamp(LocalDateTime.now())
+                .paymentId(payment.getId())
+                .sourceAccountId(payment.getSourceAccountId())
+                .destinationIban(payment.getDestinationIban())
+                .amount(payment.getAmount())
+                .transactionType(payment.getType().name())
+                .transactionStatus(payment.getStatus().name())
+                .build();
+        
+        eventPublisher.publishEvent(
+                "Payment",
+                payment.getId().toString(),
+                "PAYMENT_VALIDATED",
+                auditEvent
+        );
     }
 }
 

@@ -1,17 +1,19 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.AuditEventDTO;
 import com.example.demo.enums.CryptoSymbol;
 import com.example.demo.enums.TradeType;
 import com.example.demo.model.CryptoTransaction;
 import com.example.demo.model.CryptoWallet;
 import com.example.demo.repository.CryptoTransactionRepository;
 import com.example.demo.repository.CryptoWalletRepository;
+import com.example.demo.util.CorrelationIdContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +23,7 @@ public class CryptoTradingService {
     private final CryptoWalletRepository walletRepository;
     private final CryptoTransactionRepository transactionRepository;
     private final CryptoPriceService priceService;
+    private final EventPublisher eventPublisher;
     
     @Transactional
     public CryptoTransaction trade(Long userId, CryptoSymbol symbol, Double quantity, TradeType type) {
@@ -63,7 +66,43 @@ public class CryptoTradingService {
                 .priceAtTime(currentPrice)
                 .build();
         
-        return transactionRepository.save(transaction);
+        transaction = transactionRepository.save(transaction);
+        
+        // Publication de l'événement d'audit dans la table outbox (dans la même transaction)
+        publishCryptoTradeEvent(transaction, type);
+        
+        return transaction;
+    }
+
+    /**
+     * Publie un événement d'audit lors d'un trade crypto
+     */
+    private void publishCryptoTradeEvent(CryptoTransaction transaction, TradeType tradeType) {
+        String eventType = tradeType == TradeType.BUY ? "CRYPTO_BUY" : "CRYPTO_SELL";
+        
+        AuditEventDTO auditEvent = AuditEventDTO.builder()
+                .correlationId(CorrelationIdContext.getCorrelationId())
+                .userId(transaction.getUserId().toString())
+                .actionType(eventType)
+                .serviceName("crypto-service")
+                .description(String.format("Crypto %s transaction: %s %s at %s EUR", 
+                        tradeType.name(), transaction.getQuantity(), 
+                        transaction.getSymbol(), transaction.getPriceAtTime()))
+                .status("SUCCESS")
+                .timestamp(LocalDateTime.now())
+                .transactionId(transaction.getId())
+                .symbol(transaction.getSymbol().name())
+                .tradeType(transaction.getType().name())
+                .quantity(transaction.getQuantity())
+                .priceAtTime(transaction.getPriceAtTime())
+                .build();
+        
+        eventPublisher.publishEvent(
+                "CryptoTransaction",
+                transaction.getId().toString(),
+                eventType,
+                auditEvent
+        );
     }
 }
 
