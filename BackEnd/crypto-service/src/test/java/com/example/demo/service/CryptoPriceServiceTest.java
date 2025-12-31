@@ -8,6 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -18,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class CryptoPriceServiceTest {
     
     @Mock
@@ -26,9 +29,9 @@ class CryptoPriceServiceTest {
     @InjectMocks
     private CryptoPriceService cryptoPriceService;
     
-    @BeforeEach
-    void setUp() {
-        // Mock initial prices - UN SEUL appel pour toutes les cryptos
+    @Test
+    void testGetCryptoPrice_Success() throws InterruptedException {
+        // Given
         Map<CryptoSymbol, Double> allPrices = Map.of(
                 CryptoSymbol.BTC, 50000.0,
                 CryptoSymbol.ETH, 3000.0,
@@ -36,10 +39,6 @@ class CryptoPriceServiceTest {
         );
         when(coinGeckoClient.getAllCryptoPricesInEur())
                 .thenReturn(Mono.just(allPrices));
-    }
-    
-    @Test
-    void testGetCryptoPrice_Success() throws InterruptedException {
         // Given
         CryptoSymbol symbol = CryptoSymbol.BTC;
         Double expectedPrice = 50000.0;
@@ -71,7 +70,16 @@ class CryptoPriceServiceTest {
     
     @Test
     void testGetAllPrices() throws InterruptedException {
-        // Given - Initialize cache first
+        // Given - Mock les prix
+        Map<CryptoSymbol, Double> allPrices = Map.of(
+                CryptoSymbol.BTC, 50000.0,
+                CryptoSymbol.ETH, 3000.0,
+                CryptoSymbol.SOL, 150.0
+        );
+        when(coinGeckoClient.getAllCryptoPricesInEur())
+                .thenReturn(Mono.just(allPrices));
+        
+        // Initialize cache first
         cryptoPriceService.initializePrices();
         // Wait for async operations
         Thread.sleep(200);

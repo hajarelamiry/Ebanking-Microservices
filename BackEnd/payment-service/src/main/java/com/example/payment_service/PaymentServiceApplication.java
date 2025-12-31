@@ -3,16 +3,12 @@ package com.example.payment_service;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Application principale du microservice Payment Service
  * Eureka Client fonctionne automatiquement si la dépendance est présente
  */
 @SpringBootApplication
-@EnableScheduling
-@EnableAsync
 @EnableFeignClients
 public class PaymentServiceApplication {
 

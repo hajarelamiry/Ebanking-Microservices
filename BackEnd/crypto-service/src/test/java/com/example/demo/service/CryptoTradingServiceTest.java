@@ -12,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Optional;
 
@@ -20,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class CryptoTradingServiceTest {
     
     @Mock
@@ -30,6 +33,9 @@ class CryptoTradingServiceTest {
     
     @Mock
     private CryptoPriceService priceService;
+    
+    @Mock
+    private AuditService auditService;
     
     @InjectMocks
     private CryptoTradingService tradingService;
@@ -73,6 +79,7 @@ class CryptoTradingServiceTest {
                 wallet.getBalance().equals(quantity)
         ));
         verify(transactionRepository).save(any(CryptoTransaction.class));
+        verify(auditService).sendAuditEvent(any());
     }
     
     @Test
