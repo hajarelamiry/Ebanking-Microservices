@@ -119,8 +119,16 @@ public class AuditController {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
         
         Page<AuditLog> auditLogs;
-        if (userId != null || actionType != null || serviceName != null || 
-            status != null || startDate != null || endDate != null) {
+        // Si seul serviceName est fourni, utiliser la méthode dédiée (plus simple et fiable)
+        if (serviceName != null && userId == null && actionType == null && 
+            status == null && startDate == null && endDate == null) {
+            auditLogs = auditService.getHistoryByServiceName(serviceName, pageable);
+        } else if (serviceName != null && status != null && userId == null && 
+                   actionType == null && startDate == null && endDate == null) {
+            // Si serviceName + status uniquement, utiliser la méthode dédiée
+            auditLogs = auditService.getHistoryByServiceNameAndStatus(serviceName, status, pageable);
+        } else if (userId != null || actionType != null || serviceName != null || 
+                   status != null || startDate != null || endDate != null) {
             auditLogs = auditService.getAllHistoryWithFilters(
                     userId, actionType, serviceName, status, startDate, endDate, pageable
             );

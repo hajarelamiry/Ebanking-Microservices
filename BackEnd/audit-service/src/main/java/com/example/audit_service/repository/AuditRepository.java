@@ -67,6 +67,9 @@ public interface AuditRepository extends JpaRepository<AuditLog, Long> {
 
     Page<AuditLog> findByServiceNameOrderByTimestampDesc(String serviceName, Pageable pageable);
 
+    // Par service et status
+    Page<AuditLog> findByServiceNameAndStatusOrderByTimestampDesc(String serviceName, String status, Pageable pageable);
+
     // Par type d'action
     List<AuditLog> findByActionTypeOrderByTimestampDesc(String actionType);
 

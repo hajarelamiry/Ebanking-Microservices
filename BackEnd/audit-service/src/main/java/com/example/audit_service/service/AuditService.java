@@ -108,6 +108,22 @@ public class AuditService {
     }
 
     /**
+     * Historique par service (méthode dédiée pour éviter les problèmes de requête)
+     */
+    @Transactional(readOnly = true)
+    public Page<AuditLog> getHistoryByServiceName(String serviceName, Pageable pageable) {
+        return auditRepository.findByServiceNameOrderByTimestampDesc(serviceName, pageable);
+    }
+
+    /**
+     * Historique par service et status (méthode dédiée pour éviter les problèmes de requête)
+     */
+    @Transactional(readOnly = true)
+    public Page<AuditLog> getHistoryByServiceNameAndStatus(String serviceName, String status, Pageable pageable) {
+        return auditRepository.findByServiceNameAndStatusOrderByTimestampDesc(serviceName, status, pageable);
+    }
+
+    /**
      * 4️⃣ Historique global avec filtres (admin)
      */
     @Transactional(readOnly = true)
