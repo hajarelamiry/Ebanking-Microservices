@@ -33,7 +33,7 @@ public class Account {
 
     // Propriétaire du compte (issu du JWT)
     @Column(name = "utilisateur_id", nullable = false, updatable = false)
-    private Long utilisateurId;
+    private String utilisateurId;
 
     // Solde sécurisé
     @Column(nullable = false, precision = 19, scale = 4)

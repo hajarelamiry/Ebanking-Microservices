@@ -21,7 +21,7 @@ public class AccountMapper {
 
     // DTO -> Entity (rarement utilisé)
     // L'utilisateurId vient du JWT (service layer)
-    public Account toEntity(AccountDto dto, Long utilisateurId) {
+    public Account toEntity(AccountDto dto, String utilisateurId) {
         if (dto == null) return null;
 
         return Account.builder()
