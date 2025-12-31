@@ -23,7 +23,7 @@ public class CryptoTradingService {
     private final CryptoWalletRepository walletRepository;
     private final CryptoTransactionRepository transactionRepository;
     private final CryptoPriceService priceService;
-    private final EventPublisher eventPublisher;
+    private final AuditService auditService; // Communication synchrone via Eureka/Feign
     
     @Transactional
     public CryptoTransaction trade(Long userId, CryptoSymbol symbol, Double quantity, TradeType type) {
@@ -68,16 +68,16 @@ public class CryptoTradingService {
         
         transaction = transactionRepository.save(transaction);
         
-        // Publication de l'événement d'audit dans la table outbox (dans la même transaction)
-        publishCryptoTradeEvent(transaction, type);
+        // Publication de l'événement d'audit via Feign Client (synchrone)
+        sendAuditEventForTrade(transaction, type);
         
         return transaction;
     }
 
     /**
-     * Publie un événement d'audit lors d'un trade crypto
+     * Envoie un événement d'audit pour un trade crypto via Feign Client
      */
-    private void publishCryptoTradeEvent(CryptoTransaction transaction, TradeType tradeType) {
+    private void sendAuditEventForTrade(CryptoTransaction transaction, TradeType tradeType) {
         String eventType = tradeType == TradeType.BUY ? "CRYPTO_BUY" : "CRYPTO_SELL";
         
         AuditEventDTO auditEvent = AuditEventDTO.builder()
@@ -97,12 +97,8 @@ public class CryptoTradingService {
                 .priceAtTime(transaction.getPriceAtTime())
                 .build();
         
-        eventPublisher.publishEvent(
-                "CryptoTransaction",
-                transaction.getId().toString(),
-                eventType,
-                auditEvent
-        );
+        // Envoie via Feign Client (Eureka découvre automatiquement audit-service)
+        auditService.sendAuditEvent(auditEvent);
     }
 }
 

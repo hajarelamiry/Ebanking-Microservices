@@ -15,9 +15,10 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Service qui lit les événements de la table outbox et les publie dans Kafka
- * Ce service s'exécute périodiquement pour garantir la publication des événements
+ * DÉSACTIVÉ : Utilisation de Feign Client/Eureka au lieu de Kafka
+ * Ce service n'est plus utilisé
  */
-@Service
+// @Service // Désactivé - plus besoin de Kafka
 @RequiredArgsConstructor
 @Slf4j
 public class OutboxRelay {
