@@ -13,10 +13,10 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     // 1. Pour récupérer tous les comptes d'un utilisateur
     // On utilise "UtilisateurId" car c'est le nom exact du champ dans ton entité
-    List<Account> findByUtilisateurId(Long utilisateurId);
+    List<Account> findByUtilisateurId(String utilisateurId);
 
     // 2. Pour vérifier si un compte existe déjà dans cette devise (pour la création)
-    boolean existsByUtilisateurIdAndDevise(Long utilisateurId, Devise devise);
+    boolean existsByUtilisateurIdAndDevise(String utilisateurId, Devise devise);
 
     // 3. LA MÉTHODE QUE TON SERVICE APPELLE :
     // Spring va automatiquement mapper "ExternalReference" au champ private String externalReference

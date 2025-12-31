@@ -10,25 +10,25 @@ public interface AccountService {
     /**
      * Crée un nouveau compte pour un utilisateur dans une devise spécifique.
      */
-    AccountDto createAccount(CreateAccountRequestDto request, Long userId);
+    AccountDto createAccount(CreateAccountRequestDto request, String  userId);
 
     /**
      * Récupère le solde actuel d'un compte appartenant à l'utilisateur.
      */
-    SoldeResponseDto consulterSolde(String accountRef, Long userId);
+    SoldeResponseDto consulterSolde(String accountRef, String userId);
 
     /**
      * Ajoute des fonds sur un compte.
      */
-    AccountDto creditAccount(String accountRef, BigDecimal amount, Long userId);
+    AccountDto creditAccount(String accountRef, BigDecimal amount, String userId);
 
     /**
      * Retire des fonds d'un compte.
      */
-    AccountDto debitAccount(String accountRef, BigDecimal amount, Long userId);
+    AccountDto debitAccount(String accountRef, BigDecimal amount, String userId);
 
     /**
      * Effectue un virement entre deux comptes (avec conversion de devise si nécessaire).
      */
-    TransactionDto processPayment(PaymentRequestDto request, Long userId);
+    TransactionDto processPayment(PaymentRequestDto request, String userId);
 }
