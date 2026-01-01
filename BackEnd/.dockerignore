@@ -1,0 +1,46 @@
+# Maven build artifacts
+**/target/
+**/.mvn/wrapper/maven-wrapper.jar
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (keep README if needed)
+*.md
+!README.md
+
+# Scripts
+*.ps1
+*.sh
+
+# Logs
+*.log
+
+# Test files only (keep main source)
+**/src/test/
+
+# Docker compose file (but keep Dockerfiles)
+docker-compose.yml
+.dockerignore
+
+# Keep all necessary files for builds
+!security-common/
+!**/src/main/
+!**/pom.xml
+!**/Dockerfile

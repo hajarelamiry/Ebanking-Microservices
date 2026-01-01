@@ -8,5 +8,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8180/realms/ebanking-realm
-          jwk-set-uri: http://localhost:8180/realms/ebanking-realm/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8080/realms/ebanking-realm
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true

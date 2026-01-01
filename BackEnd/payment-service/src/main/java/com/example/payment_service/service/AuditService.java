@@ -4,12 +4,11 @@ import com.example.payment_service.client.AuditClient;
 import com.example.payment_service.dto.AuditEventDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
  * Service pour envoyer des événements d'audit via Feign Client (Eureka)
- * Utilisé en complément de Kafka pour la communication synchrone
+ * Communication synchrone directe avec l'Audit Service
  */
 @Service
 @RequiredArgsConstructor
@@ -20,11 +19,10 @@ public class AuditService {
 
     /**
      * Envoie un événement d'audit à l'Audit Service via Feign Client
-     * Cette méthode est asynchrone pour ne pas bloquer le flux principal
+     * Appel synchrone : l'événement est enregistré immédiatement
      * 
      * @param auditEvent L'événement d'audit à envoyer
      */
-    @Async
     public void sendAuditEvent(AuditEventDTO auditEvent) {
         try {
             // Convertit le DTO local en DTO compatible avec Audit Service
