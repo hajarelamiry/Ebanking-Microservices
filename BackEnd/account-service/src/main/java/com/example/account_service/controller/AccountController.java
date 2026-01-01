@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -75,6 +76,77 @@ public class AccountController {
         String username = getAuthenticatedUsername(jwt);
         return ResponseEntity.ok(accountService.processPayment(request, username));
     }
+
+    @GetMapping("/{accountRef}/statements")
+    public ResponseEntity<StatementResponseDto> getStatement(
+            @PathVariable String accountRef,
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        String username = getAuthenticatedUsername(jwt);
+
+        return ResponseEntity.ok(
+                accountService.generateStatement(
+                        accountRef,
+                        startDate,
+                        endDate,
+                        username
+                )
+        );
+    }
+
+    @GetMapping("/{accountRef}/statements/export/csv")
+    public ResponseEntity<byte[]> exportStatementCsv(
+            @PathVariable String accountRef,
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        String username = getAuthenticatedUsername(jwt);
+
+        byte[] csv = accountService.exportStatementCsv(
+                accountRef,
+                startDate,
+                endDate,
+                username
+        );
+
+        return ResponseEntity.ok()
+                .header("Content-Type", "text/csv")
+                .header(
+                        "Content-Disposition",
+                        "attachment; filename=statement-" + accountRef + ".csv"
+                )
+                .body(csv);
+    }
+
+
+    @GetMapping("/{accountRef}/statements/export/pdf")
+    public ResponseEntity<byte[]> exportStatementPdf(
+            @PathVariable String accountRef,
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        String username = getAuthenticatedUsername(jwt);
+
+        byte[] pdf = accountService.exportStatementPdf(
+                accountRef,
+                startDate,
+                endDate,
+                username
+        );
+
+        return ResponseEntity.ok()
+                .header("Content-Type", "application/pdf")
+                .header(
+                        "Content-Disposition",
+                        "attachment; filename=releve-" + accountRef + ".pdf"
+                )
+                .body(pdf);
+    }
+
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<AccountDto> getAccountByUserId(
