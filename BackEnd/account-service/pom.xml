@@ -97,6 +97,7 @@
             <groupId>com.example</groupId>
             <artifactId>security-common</artifactId>
             <version>1.0.0</version>
+
         </dependency>
 
     </dependencies>

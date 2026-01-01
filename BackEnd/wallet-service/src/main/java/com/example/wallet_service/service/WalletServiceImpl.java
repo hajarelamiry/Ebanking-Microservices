@@ -23,15 +23,13 @@ public class WalletServiceImpl implements WalletService {
     private final ExpenseRepository expenseRepository;
     private final AccountClient accountClient;
 
-
     @Override
     public WalletResponseDto createWallet(
             WalletRequestDto request,
-            String userId,
-            String token) {
+            String userId) {
 
-        //Vérifier que le compte existe
-        accountClient.getSolde(request.getAccountRef(), token);
+        // Vérifier que le compte existe (token propagé automatiquement)
+        accountClient.getSolde(request.getAccountRef());
 
         Wallet wallet = Wallet.builder()
                 .name(request.getName())
@@ -44,42 +42,32 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public ExpenseResponseDto addExpense(String walletRef, ExpenseRequestDto request, String userId, String token) {
+    public ExpenseResponseDto addExpense(
+            String walletRef,
+            ExpenseRequestDto request,
+            String userId) {
 
-        //Récupération et Sécurité (On combine les deux)
         Wallet wallet = walletRepository.findByWalletRef(walletRef)
                 .filter(w -> w.getUserId().equals(userId))
                 .orElseThrow(() -> new RuntimeException("Wallet introuvable ou accès refusé"));
 
-        //Calcul du budget avec gestion du NULL
         BigDecimal spent = expenseRepository.sumAmountByWallet(wallet.getId());
-        if (spent == null) spent = BigDecimal.ZERO; // Sécurité anti-NPE
+        if (spent == null) spent = BigDecimal.ZERO;
 
-        // 3. Vérification du plafond
         if (spent.add(request.getAmount()).compareTo(wallet.getBudgetLimit()) > 0) {
             throw new RuntimeException("Budget du wallet dépassé (" + wallet.getBudgetLimit() + " max)");
         }
 
-        try {
-            // On crée la map attendue par l'API
-            Map<String, BigDecimal> payload = Map.of("amount", request.getAmount());
+        // Débit bancaire (Authorization propagé)
+        Map<String, BigDecimal> payload = Map.of("amount", request.getAmount());
+        accountClient.debitAccount(wallet.getAccountRef(), payload);
 
-            accountClient.debitAccount(
-                    wallet.getAccountRef(),
-                    payload,
-                    token
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Échec du débit bancaire : " + e.getMessage());
-        }
-
-        // Enregistrement local
         Expense expense = Expense.builder()
                 .wallet(wallet)
                 .amount(request.getAmount())
                 .category(request.getCategory())
                 .description(request.getDescription())
-                .date(LocalDateTime.now()) // Toujours fixer la date explicitement
+                .date(LocalDateTime.now())
                 .build();
 
         return mapToExpenseDto(expenseRepository.save(expense));
@@ -96,7 +84,6 @@ public class WalletServiceImpl implements WalletService {
         BigDecimal totalSpent = expenseRepository.sumAmountByWallet(wallet.getId());
         if (totalSpent == null) totalSpent = BigDecimal.ZERO;
 
-        // Correction des noms des méthodes pour correspondre au DTO
         return WalletSummaryDto.builder()
                 .walletName(wallet.getName())
                 .walletRef(wallet.getWalletRef())
@@ -112,8 +99,6 @@ public class WalletServiceImpl implements WalletService {
                 )
                 .build();
     }
-
-
 
     private WalletResponseDto mapToWalletDto(Wallet wallet) {
         return WalletResponseDto.builder()
