@@ -6,6 +6,7 @@ import com.example.payment_service.dto.PaymentResponseDTO;
 import com.example.payment_service.enums.TransactionStatus;
 import com.example.payment_service.model.Payment;
 import com.example.payment_service.repository.PaymentRepository;
+import com.example.payment_service.service.AccountService;
 import com.example.payment_service.service.AuditService;
 import com.example.payment_service.service.FraudDetectionService;
 import com.example.payment_service.service.PaymentService;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -28,6 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final FraudDetectionService fraudDetectionService;
     private final AuditService auditService; // Communication synchrone via Eureka/Feign
+    private final AccountService accountService; // Communication avec Account Service via Feign
 
     @Override
     @Transactional
@@ -35,7 +38,43 @@ public class PaymentServiceImpl implements PaymentService {
         log.info("Initiation d'un virement: compte source={}, montant={}, type={}", 
                 requestDTO.getSourceAccountId(), requestDTO.getAmount(), requestDTO.getType());
 
-        // 1. Vérification des règles anti-fraude
+        // 1. Vérification du solde du compte via Account Service
+        BigDecimal requiredAmount = BigDecimal.valueOf(requestDTO.getAmount());
+        boolean hasSufficientBalance = accountService.hasSufficientBalance(
+                requestDTO.getSourceAccountId(), requiredAmount);
+        
+        if (!hasSufficientBalance) {
+            BigDecimal balance = accountService.getBalance(requestDTO.getSourceAccountId());
+            String errorMessage = String.format(
+                    "Insufficient balance. Account: %s, Balance: %s, Required: %s", 
+                    requestDTO.getSourceAccountId(), balance, requiredAmount);
+            log.warn("❌ Payment rejected: {}", errorMessage);
+            
+            // Créer un paiement avec statut REJECTED
+            Payment payment = Payment.builder()
+                    .sourceAccountId(requestDTO.getSourceAccountId())
+                    .destinationIban(requestDTO.getDestinationIban())
+                    .amount(requestDTO.getAmount())
+                    .type(requestDTO.getType())
+                    .status(TransactionStatus.REJECTED)
+                    .build();
+            payment = paymentRepository.save(payment);
+            
+            // Envoyer l'événement d'audit
+            sendAuditEventViaFeign(payment, TransactionStatus.REJECTED, errorMessage);
+            
+            return PaymentResponseDTO.builder()
+                    .id(payment.getId())
+                    .sourceAccountId(payment.getSourceAccountId())
+                    .destinationIban(payment.getDestinationIban())
+                    .amount(payment.getAmount())
+                    .status(payment.getStatus())
+                    .message(errorMessage)
+                    .createdAt(payment.getCreatedAt())
+                    .build();
+        }
+
+        // 2. Vérification des règles anti-fraude
         FraudDetectionService.FraudCheckResult fraudCheck = fraudDetectionService.checkFraudRules(requestDTO);
         TransactionStatus initialStatus = fraudCheck.getStatus();
         String message = fraudCheck.getMessage();
@@ -56,8 +95,24 @@ public class PaymentServiceImpl implements PaymentService {
         // 4. Publication de l'événement d'audit via Feign Client/Eureka (synchrone)
         sendAuditEventViaFeign(payment, initialStatus, message);
 
-        // 5. Simulation d'appel au legacy-adapter-service (seulement si PENDING)
+        // 5. Débiter le compte si le paiement est validé
         if (initialStatus == TransactionStatus.PENDING) {
+            // Débiter le compte avant de simuler l'appel legacy
+            try {
+                accountService.debitAccount(requestDTO.getSourceAccountId(), requiredAmount);
+                log.info("Account {} debited with {} EUR for payment {}", 
+                        requestDTO.getSourceAccountId(), requiredAmount, payment.getId());
+            } catch (Exception e) {
+                log.error("Failed to debit account {}: {}", requestDTO.getSourceAccountId(), e.getMessage());
+                // Mettre à jour le statut du paiement en REJECTED
+                payment.setStatus(TransactionStatus.REJECTED);
+                paymentRepository.save(payment);
+                sendAuditEventViaFeign(payment, TransactionStatus.REJECTED, 
+                        "Payment rejected: Failed to debit account - " + e.getMessage());
+                throw new RuntimeException("Failed to process payment: " + e.getMessage(), e);
+            }
+            
+            // Simulation d'appel au legacy-adapter-service
             simulateLegacyAdapterCall(payment);
         }
 

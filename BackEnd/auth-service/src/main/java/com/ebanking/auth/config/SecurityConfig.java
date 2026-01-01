@@ -1,4 +1,4 @@
-package com.ebanking.auth.config;
+vpackage com.ebanking.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

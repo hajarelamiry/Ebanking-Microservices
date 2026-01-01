@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Application principale du microservice Audit Service
  * Eureka Client fonctionne automatiquement si la dépendance est présente
  */
+@EnableDiscoveryClient
 @SpringBootApplication
 public class AuditServiceApplication {
 

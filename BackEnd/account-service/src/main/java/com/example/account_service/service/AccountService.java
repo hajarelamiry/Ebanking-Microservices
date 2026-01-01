@@ -31,4 +31,14 @@ public interface AccountService {
      * Effectue un virement entre deux comptes (avec conversion de devise si nécessaire).
      */
     TransactionDto processPayment(PaymentRequestDto request, String userId);
+
+    /**
+     * Récupère le compte principal (EUR par défaut) d'un utilisateur par son userId.
+     * Si le compte EUR n'existe pas, retourne le premier compte disponible.
+     * 
+     * @param userId L'identifiant de l'utilisateur
+     * @return Le compte principal de l'utilisateur
+     * @throws RuntimeException si aucun compte n'est trouvé pour cet utilisateur
+     */
+    AccountDto getAccountByUserId(String userId);
 }

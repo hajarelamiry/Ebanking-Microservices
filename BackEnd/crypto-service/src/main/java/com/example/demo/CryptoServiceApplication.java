@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * Eureka Client fonctionne automatiquement si la dépendance est présente
  */
 @SpringBootApplication
+@EnableDiscoveryClient
 @EnableScheduling // Nécessaire pour CryptoPriceService.refreshPrices()
 @EnableFeignClients
 public class CryptoServiceApplication {

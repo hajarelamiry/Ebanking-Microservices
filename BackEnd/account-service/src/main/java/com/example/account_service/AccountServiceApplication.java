@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.example.account_service.client")
 public class AccountServiceApplication {
 

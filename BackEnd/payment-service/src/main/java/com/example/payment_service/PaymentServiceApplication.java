@@ -9,6 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * Eureka Client fonctionne automatiquement si la dépendance est présente
  */
 @SpringBootApplication
+@EnableDiscoveryClient
 @EnableFeignClients
 public class PaymentServiceApplication {
 

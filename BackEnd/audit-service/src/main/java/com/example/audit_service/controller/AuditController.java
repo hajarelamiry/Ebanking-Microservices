@@ -3,6 +3,7 @@ package com.example.audit_service.controller;
 import com.example.audit_service.dto.AuditEventDTO;
 import com.example.audit_service.model.AuditLog;
 import com.example.audit_service.service.AuditService;
+import com.example.audit_service.util.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -80,6 +83,13 @@ public class AuditController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
     ) {
+        // Vérifier que le CLIENT ne peut accéder qu'à son propre historique
+        // Spring Security garantit que l'utilisateur est authentifié à ce point
+        String currentUserId = JwtUtils.getUserId();
+        if (currentUserId != null && JwtUtils.isClient() && !userId.equals(currentUserId)) {
+            throw new AccessDeniedException("CLIENT can only access their own history");
+        }
+        
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
         
         Page<AuditLog> auditLogs;
@@ -171,6 +181,13 @@ public class AuditController {
      */
     @GetMapping("/stats/user/{userId}")
     public ResponseEntity<Map<String, Object>> getUserStats(@PathVariable String userId) {
+        // Vérifier que le CLIENT ne peut accéder qu'à ses propres stats
+        // Spring Security garantit que l'utilisateur est authentifié à ce point
+        String currentUserId = JwtUtils.getUserId();
+        if (JwtUtils.isClient() && currentUserId != null && !userId.equals(currentUserId)) {
+            throw new AccessDeniedException("CLIENT can only access their own stats");
+        }
+        
         Long actionCount = auditService.getUserActionCount(userId);
         
         Map<String, Object> response = new HashMap<>();
