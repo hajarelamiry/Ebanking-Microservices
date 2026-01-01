@@ -7,6 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.wallet_service.dto.*;
+import com.example.wallet_service.service.WalletService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/wallets")
@@ -17,19 +24,21 @@ public class WalletController {
 
     /**
      * Créer un nouveau portefeuille (Wallet)
-     * On récupère le userId et le Token du header (géré par Gateway ou Security)
+     * userId est fourni par l’API Gateway via header
      */
     @PostMapping
     public ResponseEntity<WalletResponseDto> createWallet(
             @Valid @RequestBody WalletRequestDto request,
-            @RequestHeader("Authorization") String token,
             @RequestHeader("X-User-Id") String userId) {
 
+        System.out.println(">>> X-User-Id reçu = " + userId);
+
         return new ResponseEntity<>(
-                walletService.createWallet(request, userId, token),
+                walletService.createWallet(request, userId),
                 HttpStatus.CREATED
         );
     }
+
 
     /**
      * Ajouter une dépense à un portefeuille spécifique
@@ -38,10 +47,11 @@ public class WalletController {
     public ResponseEntity<ExpenseResponseDto> addExpense(
             @PathVariable String walletRef,
             @Valid @RequestBody ExpenseRequestDto request,
-            @RequestHeader("Authorization") String token,
             @RequestHeader("X-User-Id") String userId) {
 
-        return ResponseEntity.ok(walletService.addExpense(walletRef, request, userId, token));
+        return ResponseEntity.ok(
+                walletService.addExpense(walletRef, request, userId)
+        );
     }
 
     /**
@@ -52,6 +62,8 @@ public class WalletController {
             @PathVariable String walletRef,
             @RequestHeader("X-User-Id") String userId) {
 
-        return ResponseEntity.ok(walletService.getGlobalStatus(walletRef, userId));
+        return ResponseEntity.ok(
+                walletService.getGlobalStatus(walletRef, userId)
+        );
     }
 }

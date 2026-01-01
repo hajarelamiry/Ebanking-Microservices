@@ -9,13 +9,13 @@ import java.util.Map;
 
 @FeignClient(name = "account-service")
 public interface AccountClient {
-    @GetMapping("/api/accounts/{ref}/solde")
-    SoldeResponseDto getSolde(@PathVariable String ref, @RequestHeader("Authorization") String token);
+
+    @GetMapping("/api/accounts/{ref}/balance")
+    SoldeResponseDto getSolde(@PathVariable("ref") String ref);
 
     @PostMapping("/api/accounts/{ref}/debit")
     void debitAccount(
-            @PathVariable String ref,
-            @RequestBody Map<String, BigDecimal> payload,
-            @RequestHeader("Authorization") String token
+            @PathVariable("ref") String ref,
+            @RequestBody Map<String, BigDecimal> payload
     );
 }
