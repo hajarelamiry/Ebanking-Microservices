@@ -1,4 +1,4 @@
-# Stage 1: Build security-common and user-service
+# Stage 1: Build security-common and audit-service
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
@@ -8,11 +8,11 @@ COPY security-common/src ./security-common/src
 WORKDIR /app/security-common
 RUN mvn clean install -DskipTests
 
-# Copy user-service and build it
+# Copy audit-service and build it
 WORKDIR /app
-COPY user-service/pom.xml ./user-service/pom.xml
-COPY user-service/src ./user-service/src
-WORKDIR /app/user-service
+COPY audit-service/pom.xml ./audit-service/pom.xml
+COPY audit-service/src ./audit-service/src
+WORKDIR /app/audit-service
 RUN mvn clean package -DskipTests
 
 # Stage 2: Create the runtime image
@@ -21,14 +21,14 @@ RUN apk add --no-cache wget
 WORKDIR /app
 
 # Copy the built JAR
-COPY --from=build /app/user-service/target/*.jar app.jar
+COPY --from=build /app/audit-service/target/*.jar app.jar
 
 # Expose the port
-EXPOSE 8082
+EXPOSE 8084
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:8082/actuator/health 2>/dev/null || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://localhost:8084/actuator/health 2>/dev/null || exit 1
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
