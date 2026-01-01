@@ -3,7 +3,8 @@ package com.example.audit_service.controller;
 import com.example.audit_service.dto.AuditEventDTO;
 import com.example.audit_service.model.AuditLog;
 import com.example.audit_service.service.AuditService;
-import com.example.audit_service.util.JwtUtils;
+import com.example.common.security.SecurityUtils;
+import com.example.common.security.AuthenticatedUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -85,8 +86,9 @@ public class AuditController {
     ) {
         // Vérifier que le CLIENT ne peut accéder qu'à son propre historique
         // Spring Security garantit que l'utilisateur est authentifié à ce point
-        String currentUserId = JwtUtils.getUserId();
-        if (currentUserId != null && JwtUtils.isClient() && !userId.equals(currentUserId)) {
+        AuthenticatedUser user = SecurityUtils.getCurrentUser();
+        String currentUserId = user.getUserId();
+        if (currentUserId != null && user.isClient() && !userId.equals(currentUserId)) {
             throw new AccessDeniedException("CLIENT can only access their own history");
         }
         
@@ -183,8 +185,9 @@ public class AuditController {
     public ResponseEntity<Map<String, Object>> getUserStats(@PathVariable String userId) {
         // Vérifier que le CLIENT ne peut accéder qu'à ses propres stats
         // Spring Security garantit que l'utilisateur est authentifié à ce point
-        String currentUserId = JwtUtils.getUserId();
-        if (JwtUtils.isClient() && currentUserId != null && !userId.equals(currentUserId)) {
+        AuthenticatedUser user = SecurityUtils.getCurrentUser();
+        String currentUserId = user.getUserId();
+        if (user.isClient() && currentUserId != null && !userId.equals(currentUserId)) {
             throw new AccessDeniedException("CLIENT can only access their own stats");
         }
         

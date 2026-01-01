@@ -10,7 +10,8 @@ import com.example.demo.model.CryptoWallet;
 import com.example.demo.repository.CryptoTransactionRepository;
 import com.example.demo.repository.CryptoWalletRepository;
 import com.example.demo.util.CorrelationIdContext;
-import com.example.demo.util.JwtUtils;
+import com.example.common.security.SecurityUtils;
+import com.example.common.security.AuthenticatedUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,8 @@ public class CryptoTradingService {
         
         // Récupérer l'accountRef depuis account-service via le nouvel endpoint
         // Utiliser le preferred_username du JWT car account-service attend un username (ex: "user1")
-        String username = JwtUtils.getUsername();
+        AuthenticatedUser user = SecurityUtils.getCurrentUser();
+        String username = user.getUsername();
         if (username == null || username.isEmpty()) {
             throw new IllegalStateException("Impossible de récupérer le username depuis le JWT. Le token ne contient pas de preferred_username.");
         }

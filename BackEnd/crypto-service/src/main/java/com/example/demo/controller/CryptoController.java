@@ -9,7 +9,8 @@ import com.example.demo.repository.CryptoWalletRepository;
 import com.example.demo.service.CryptoPriceService;
 import com.example.demo.service.CryptoTradingService;
 import com.example.demo.exception.UserNotFoundException;
-import com.example.demo.util.JwtUtils;
+import com.example.common.security.SecurityUtils;
+import com.example.common.security.AuthenticatedUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,17 +53,19 @@ public class CryptoController {
     @GetMapping("/wallet")
     @PreAuthorize("hasAnyRole('CLIENT', 'AGENT', 'ADMIN')")
     public ResponseEntity<WalletResponse> getWallet(@RequestParam(required = false) Long userId) {
+        AuthenticatedUser user = SecurityUtils.getCurrentUser();
+        
         // Si userId n'est pas fourni, utiliser celui du token
         Long targetUserId = userId;
         if (targetUserId == null) {
-            targetUserId = JwtUtils.getUserIdAsLong();
+            targetUserId = SecurityUtils.getUserIdAsLong();
             if (targetUserId == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
         
         // Vérifier que le CLIENT ne peut accéder qu'à son propre wallet
-        if (JwtUtils.isClient() && !targetUserId.equals(JwtUtils.getUserIdAsLong())) {
+        if (user.isClient() && !targetUserId.equals(SecurityUtils.getUserIdAsLong())) {
             throw new AccessDeniedException("CLIENT can only access their own wallet");
         }
         
@@ -87,16 +90,17 @@ public class CryptoController {
             @RequestParam(required = false) Long userId,
             @Valid @RequestBody TradeRequest request) {
         
+        AuthenticatedUser user = SecurityUtils.getCurrentUser();
+        
         // Utiliser le userId du token si non fourni
         Long targetUserId = userId;
         if (targetUserId == null) {
             // Récupérer directement depuis le JWT (sans appeler user-service)
-            targetUserId = JwtUtils.getUserIdAsLong();
+            targetUserId = SecurityUtils.getUserIdAsLong();
             log.debug("getUserIdAsLong() returned: {}", targetUserId);
             
             if (targetUserId == null) {
-                String jwtUserId = JwtUtils.getUserId();
-                log.error("Unable to determine targetUserId from JWT. JWT userId: {}", jwtUserId);
+                log.error("Unable to determine targetUserId from JWT. User: {}", user);
                 throw new UserNotFoundException(
                         "Impossible de déterminer l'identifiant utilisateur depuis le JWT. Le token ne contient pas d'identifiant valide.");
             }
@@ -105,7 +109,7 @@ public class CryptoController {
         log.debug("Using targetUserId: {}", targetUserId);
         
         // Vérifier que le CLIENT ne peut trader que pour lui-même
-        Long currentUserId = JwtUtils.getUserIdAsLong();
+        Long currentUserId = SecurityUtils.getUserIdAsLong();
         if (currentUserId != null && !targetUserId.equals(currentUserId)) {
             throw new AccessDeniedException("CLIENT can only trade for themselves");
         }
@@ -134,17 +138,19 @@ public class CryptoController {
     @GetMapping("/history")
     @PreAuthorize("hasAnyRole('CLIENT', 'AGENT', 'ADMIN')")
     public ResponseEntity<List<TransactionResponse>> getHistory(@RequestParam(required = false) Long userId) {
+        AuthenticatedUser user = SecurityUtils.getCurrentUser();
+        
         // Si userId n'est pas fourni, utiliser celui du token
         Long targetUserId = userId;
         if (targetUserId == null) {
-            targetUserId = JwtUtils.getUserIdAsLong();
+            targetUserId = SecurityUtils.getUserIdAsLong();
             if (targetUserId == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
         
         // Vérifier que le CLIENT ne peut voir que son propre historique
-        if (JwtUtils.isClient() && !targetUserId.equals(JwtUtils.getUserIdAsLong())) {
+        if (user.isClient() && !targetUserId.equals(SecurityUtils.getUserIdAsLong())) {
             throw new AccessDeniedException("CLIENT can only access their own history");
         }
         

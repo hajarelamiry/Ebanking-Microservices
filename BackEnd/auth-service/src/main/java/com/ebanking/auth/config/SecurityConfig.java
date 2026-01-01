@@ -1,4 +1,4 @@
-vpackage com.ebanking.auth.config;
+package com.ebanking.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .cors(org.springframework.security.config.Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
+                        .jwt(org.springframework.security.config.Customizer.withDefaults()));
         return http.build();
     }
 
@@ -33,10 +33,4 @@ public class SecurityConfig {
         return source;
     }
 
-    @Bean
-    public org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter jwtAuthenticationConverter() {
-        org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter converter = new org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(new KeycloakJwtAuthenticationConverter());
-        return converter;
-    }
 }

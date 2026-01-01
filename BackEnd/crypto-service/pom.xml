@@ -114,6 +114,13 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<!-- Security Common -->
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>security-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
