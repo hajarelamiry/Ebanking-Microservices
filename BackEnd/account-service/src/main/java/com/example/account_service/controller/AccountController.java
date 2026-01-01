@@ -148,4 +148,27 @@ public class AccountController {
     }
 
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<AccountDto> getAccountByUserId(
+            @PathVariable String userId,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        // Vérifier que l'utilisateur demande son propre compte
+        String authenticatedUsername = getAuthenticatedUsername(jwt);
+        if (!authenticatedUsername.equals(userId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        try {
+            AccountDto account = accountService.getAccountByUserId(userId);
+            return ResponseEntity.ok(account);
+        } catch (RuntimeException e) {
+            // Si aucun compte n'existe, retourner 404 au lieu de 500
+            if (e.getMessage() != null && e.getMessage().contains("Aucun compte trouvé")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            // Pour les autres erreurs, laisser Spring gérer (500)
+            throw e;
+        }
+    }
 }

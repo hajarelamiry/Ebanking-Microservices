@@ -6,6 +6,7 @@ import com.example.payment_service.enums.TransactionStatus;
 import com.example.payment_service.enums.TransactionType;
 import com.example.payment_service.model.Payment;
 import com.example.payment_service.repository.PaymentRepository;
+import com.example.payment_service.service.AuditService;
 import com.example.payment_service.service.FraudDetectionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +33,9 @@ class PaymentServiceImplTest {
 
     @Mock
     private FraudDetectionService fraudDetectionService;
+
+    @Mock
+    private AuditService auditService;
 
     @InjectMocks
     private PaymentServiceImpl paymentService;
@@ -90,6 +94,7 @@ class PaymentServiceImplTest {
         // Vérifier que save a été appelé deux fois (création + mise à jour après legacy)
         verify(paymentRepository, times(2)).save(any(Payment.class));
         verify(fraudDetectionService).checkFraudRules(any(PaymentRequestDTO.class));
+        verify(auditService, atLeastOnce()).sendAuditEvent(any());
     }
 
     @Test
@@ -122,6 +127,7 @@ class PaymentServiceImplTest {
         // Vérifier que le legacy n'a pas été appelé pour une transaction rejetée
         verify(paymentRepository, times(1)).save(any(Payment.class));
         verify(fraudDetectionService).checkFraudRules(any(PaymentRequestDTO.class));
+        verify(auditService).sendAuditEvent(any());
     }
 
     @Test

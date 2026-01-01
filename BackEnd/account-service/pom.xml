@@ -92,6 +92,13 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
+        <!-- Security Common -->
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>security-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 	<dependencyManagement>
 		<dependencies>

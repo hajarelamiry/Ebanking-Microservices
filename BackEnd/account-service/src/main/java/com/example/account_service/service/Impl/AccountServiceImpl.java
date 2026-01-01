@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -295,5 +296,35 @@ public class AccountServiceImpl implements AccountService {
     private String generateStatementNumber() {
         return "RELEVE-" + LocalDate.now().getYear() + "-" + System.nanoTime();
     }
+
+    @Override
+    public AccountDto getAccountByUserId(String userId) {
+        // Récupérer tous les comptes de l'utilisateur
+        List<Account> userAccounts = accountRepository.findByUtilisateurId(userId);
+
+        if (userAccounts.isEmpty()) {
+            throw new RuntimeException("Aucun compte trouvé pour l'utilisateur: " + userId);
+        }
+
+        // Chercher d'abord le compte EUR (compte principal)
+        Account account = userAccounts.stream()
+                .filter(acc -> acc.getDevise() == Devise.EUR && acc.getStatus() == AccountStatus.ACTIF)
+                .findFirst()
+                .orElse(null);
+
+        // Si EUR n'existe pas, prendre le premier compte actif disponible
+        if (account == null) {
+            account = userAccounts.stream()
+                    .filter(acc -> acc.getStatus() == AccountStatus.ACTIF)
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Aucun compte actif trouvé pour l'utilisateur: " + userId));
+        }
+
+        return accountMapper.toDto(account);
+    }
+
+
+
+
 
 }

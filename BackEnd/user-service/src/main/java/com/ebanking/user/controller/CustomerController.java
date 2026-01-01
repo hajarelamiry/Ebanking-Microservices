@@ -17,18 +17,38 @@ public class CustomerController {
 
     @GetMapping("/me")
     public Customer getMyProfile(@AuthenticationPrincipal Jwt jwt) {
+        // Extraire le username depuis le JWT (preferred_username)
         String username = jwt.getClaimAsString("preferred_username");
+        
+        if (username == null || username.isEmpty()) {
+            throw new RuntimeException("JWT token does not contain preferred_username");
+        }
+        
+        // Essayer de récupérer le customer existant
         try {
             return customerService.getCustomerByUsername(username);
         } catch (RuntimeException e) {
-            // Auto-create for demo simplicity if not exists
-            Customer newCustomer = Customer.builder()
-                    .username(username)
-                    .email(jwt.getClaimAsString("email"))
-                    .firstName(jwt.getClaimAsString("given_name"))
-                    .lastName(jwt.getClaimAsString("family_name"))
-                    .build();
-            return customerService.createCustomer(newCustomer);
+            // Si le customer n'existe pas (message contient "not found"), le créer automatiquement
+            if (e.getMessage() != null && e.getMessage().contains("not found")) {
+                // Auto-create for demo simplicity if not exists
+                Customer newCustomer = Customer.builder()
+                        .username(username)
+                        .email(jwt.getClaimAsString("email"))
+                        .firstName(jwt.getClaimAsString("given_name"))
+                        .lastName(jwt.getClaimAsString("family_name"))
+                        .build();
+                try {
+                    return customerService.createCustomer(newCustomer);
+                } catch (RuntimeException createException) {
+                    // Si la création échoue (ex: customer existe déjà), réessayer de le récupérer
+                    if (createException.getMessage() != null && createException.getMessage().contains("already exists")) {
+                        return customerService.getCustomerByUsername(username);
+                    }
+                    throw createException;
+                }
+            }
+            // Pour les autres erreurs, re-lancer l'exception
+            throw e;
         }
     }
 

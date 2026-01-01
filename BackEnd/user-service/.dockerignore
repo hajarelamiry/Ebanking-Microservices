@@ -2,7 +2,7 @@ target/
 .idea/
 *.iml
 .git/
-.gitignore
-mvnw
-mvnw.cmd
-.mvn/
+*.md
+!README.md
+src/test/
+.m2/
