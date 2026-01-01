@@ -4,6 +4,7 @@ import com.example.account_service.dto.TransactionDto;
 
 import com.example.account_service.dto.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public interface AccountService {
 
@@ -31,4 +32,15 @@ public interface AccountService {
      * Effectue un virement entre deux comptes (avec conversion de devise si nécessaire).
      */
     TransactionDto processPayment(PaymentRequestDto request, String userId);
+
+    StatementResponseDto generateStatement(
+            String accountRef,
+            LocalDate startDate,
+            LocalDate endDate,
+            String userId
+    );
+
+    byte[] exportStatementPdf(String accountRef, LocalDate startDate, LocalDate endDate, String userId);
+    byte[] exportStatementCsv(String accountRef, LocalDate startDate, LocalDate endDate, String userId);
+
 }
