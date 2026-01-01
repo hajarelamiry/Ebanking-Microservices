@@ -1,0 +1,454 @@
+{
+	"info": {
+		"_postman_id": "ebanking-microservices-001",
+		"name": "E-Banking Microservices",
+		"description": "Collection complète pour tester les APIs des services Payment, Crypto et Audit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Payment Service",
+			"item": [
+				{
+					"name": "Create Payment (Standard)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sourceAccountId\": \"ACC123456\",\n  \"destinationIban\": \"FR1420041010050500013M02606\",\n  \"amount\": 500.0,\n  \"type\": \"STANDARD\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/payments",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "v1", "payments"]
+						}
+					}
+				},
+				{
+					"name": "Create Payment (Instant)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sourceAccountId\": \"ACC123456\",\n  \"destinationIban\": \"FR1420041010050500013M02606\",\n  \"amount\": 200.0,\n  \"type\": \"INSTANT\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/payments",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "v1", "payments"]
+						}
+					}
+				},
+				{
+					"name": "Create Payment (Rejected - Amount > 10000)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sourceAccountId\": \"ACC123456\",\n  \"destinationIban\": \"FR1420041010050500013M02606\",\n  \"amount\": 15000.0,\n  \"type\": \"STANDARD\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/payments",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "v1", "payments"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Crypto Service",
+			"item": [
+				{
+					"name": "Get Prices",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8082/api/v1/crypto/prices",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["api", "v1", "crypto", "prices"]
+						}
+					}
+				},
+				{
+					"name": "Get Wallet",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8082/api/v1/crypto/wallet?userId=1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["api", "v1", "crypto", "wallet"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Trade BUY",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"symbol\": \"BTC\",\n  \"quantity\": 0.1,\n  \"type\": \"BUY\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1/crypto/trade?userId=1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["api", "v1", "crypto", "trade"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Trade SELL",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"symbol\": \"ETH\",\n  \"quantity\": 0.5,\n  \"type\": \"SELL\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1/crypto/trade?userId=1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["api", "v1", "crypto", "trade"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get History",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8082/api/v1/crypto/history?userId=1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["api", "v1", "crypto", "history"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Audit Service",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8083/api/audit/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "health"]
+						}
+					}
+				},
+				{
+					"name": "Log Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"test-user-001\",\n  \"actionType\": \"LOGIN\",\n  \"serviceName\": \"auth-service\",\n  \"description\": \"Connexion utilisateur\",\n  \"status\": \"SUCCESS\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8083/api/audit/events",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "events"]
+						}
+					}
+				},
+				{
+					"name": "Receive External Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"test-user-002\",\n  \"actionType\": \"VIREMENT\",\n  \"serviceName\": \"payment-service\",\n  \"description\": \"Virement externe\",\n  \"status\": \"SUCCESS\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8083/api/audit/events/external",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "events", "external"]
+						}
+					}
+				},
+				{
+					"name": "Get User History",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8083/api/audit/users/test-user-001/history?page=0&size=10",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "users", "test-user-001", "history"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Global History",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8083/api/audit/history?page=0&size=10",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "history"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get History by Service (Payment)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8083/api/audit/history?serviceName=payment-service&size=10",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "history"],
+							"query": [
+								{
+									"key": "serviceName",
+									"value": "payment-service"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get History by Service (Crypto)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8083/api/audit/history?serviceName=crypto-service&size=10",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "history"],
+							"query": [
+								{
+									"key": "serviceName",
+									"value": "crypto-service"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get History by Service and Status",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8083/api/audit/history?serviceName=payment-service&status=SUCCESS&size=5",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "history"],
+							"query": [
+								{
+									"key": "serviceName",
+									"value": "payment-service"
+								},
+								{
+									"key": "status",
+									"value": "SUCCESS"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Errors",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8083/api/audit/errors?page=0&size=10",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "errors"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User Stats",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8083/api/audit/stats/user/test-user-001",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "stats", "user", "test-user-001"]
+						}
+					}
+				},
+				{
+					"name": "Get Error Stats",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8083/api/audit/stats/errors",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "audit", "stats", "errors"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Eureka Server",
+			"item": [
+				{
+					"name": "Get Applications (JSON)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8761/eureka/apps",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8761",
+							"path": ["eureka", "apps"]
+						}
+					}
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: eureka-server
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  datasource:
+    url:
+  sql:
+    init:
+      enabled: false
+  jpa:
+    database-platform: ""
+server:
+  port: 8761
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+  instance:
+    hostname: localhost

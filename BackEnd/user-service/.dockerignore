@@ -1,0 +1,8 @@
+target/
+.idea/
+*.iml
+.git/
+*.md
+!README.md
+src/test/
+.m2/
