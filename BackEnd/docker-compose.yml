@@ -6,6 +6,7 @@ services:
   # ============================================
   
   # Keycloak - Authentication Server
+  # Keycloak - Authentication Server
   keycloak:
     image: quay.io/keycloak/keycloak:23.0.0
     container_name: ebanking-keycloak
@@ -16,23 +17,30 @@ services:
       KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: keycloak
+      # --- AJOUTER CES VARIABLES ---
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
     ports:
       - "8080:8080"
-    command: 
+    command:
       - start-dev
       - --import-realm
     volumes:
       - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
     depends_on:
-      - keycloak-db
+      keycloak-db:
+        condition: service_healthy
     networks:
       - ebanking-network
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/health/ready || exit 1"]
-      interval: 30s
+      # On utilise une vérification TCP sur le port 8080 au lieu de curl
+      test: [ "CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080" ]
+      interval: 15s
       timeout: 10s
-      retries: 5
+      retries: 15
       start_period: 60s
+
 
   # Keycloak Database
   keycloak-db:
@@ -193,6 +201,44 @@ services:
       - ebanking-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  account-db:
+    image: postgres:15-alpine
+    container_name: account-db
+    environment:
+      POSTGRES_DB: ebanking_accounts
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: h200317
+    volumes:
+      - account_db_data:/var/lib/postgresql/data
+    ports:
+      - "5438:5432"
+    networks:
+      - ebanking-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  wallet-db:
+    image: postgres:15-alpine
+    container_name: wallet-db
+    environment:
+      POSTGRES_DB: wallet_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: h200317
+    volumes:
+      - wallet_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - ebanking-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -371,6 +417,58 @@ services:
       - ebanking-network
     restart: on-failure
 
+  account-service:
+    build:
+      context: .
+      dockerfile: ./account-service/Dockerfile
+    container_name: ebanking-account-service
+    ports:
+      - "8087:8087"
+    environment:
+      - SPRING_APPLICATION_NAME=account-service
+      - SERVER_PORT=8087
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://account-db:5432/ebanking_accounts
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=h200317
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/realms/ebanking-realm
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+    networks:
+      - ebanking-network
+    restart: on-failure
+
+  wallet-service:
+    build:
+      context: .
+      dockerfile: ./wallet-service/Dockerfile
+    container_name: ebanking-wallet-service
+    ports:
+      - "8089:8089"
+    environment:
+      - SPRING_APPLICATION_NAME=wallet-service
+      - SERVER_PORT=8089
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://wallet-db:5432/wallet_service
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=h200317
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/realms/ebanking-realm
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+    networks:
+      - ebanking-network
+    restart: on-failure
+
+
+
 # ============================================
 # NETWORKS
 # ============================================
@@ -387,3 +485,5 @@ volumes:
   payment_db_data:
   crypto_db_data:
   audit_db_data:
+  account_db_data:
+  wallet_db_data:
