@@ -1,0 +1,172 @@
+/* Capitalis Extreme Minimalist Noir & White Theme - Centered Version */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #000000;
+    --bg-page: #F4F4F9;
+    --card-bg: #FFFFFF;
+    --text-muted: #8E8E93;
+}
+
+body {
+    background-color: var(--bg-page) !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.login-pf-page {
+    background: none !important;
+    width: 100%;
+    margin: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#kc-container-wrapper {
+    width: 100% !important;
+    max-width: 440px !important;
+    margin: auto !important;
+}
+
+/* Card Style */
+.card-pf {
+    background: var(--card-bg) !important;
+    border: none !important;
+    border-radius: 40px !important;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.03) !important;
+    padding: 60px 45px !important;
+}
+
+/* Logo Header Group - CENTERED */
+.header-container {
+    text-align: center;
+    /* Centered title */
+    margin-bottom: 50px;
+}
+
+#kc-content-wrapper::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 50px;
+    background: url('../img/logo.png') no-repeat center;
+    /* Centered logo */
+    background-size: contain;
+    margin-bottom: 35px;
+}
+
+#kc-page-title {
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    color: var(--primary) !important;
+    letter-spacing: -1.2px;
+    margin-bottom: 12px !important;
+    line-height: 1.1;
+    text-align: center !important;
+    /* Centered title */
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    text-align: center;
+    /* Centered subtitle */
+}
+
+/* Form Styling */
+.form-label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    margin-left: 10px;
+}
+
+.form-control {
+    width: 100% !important;
+    background-color: #F8F9FA !important;
+    border: 2px solid transparent !important;
+    border-radius: 20px !important;
+    padding: 20px 25px !important;
+    font-size: 1.05rem !important;
+    font-weight: 600;
+    color: var(--primary) !important;
+    box-sizing: border-box;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-control:focus {
+    background-color: white !important;
+    border-color: var(--primary) !important;
+    outline: none;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Checkbox & Options */
+#kc-form-options {
+    margin: 25px 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.forgot-password {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* Big Black Button */
+.btn-primary {
+    background: var(--primary) !important;
+    border: none !important;
+    border-radius: 25px !important;
+    color: white !important;
+    font-weight: 700 !important;
+    padding: 22px !important;
+    font-size: 1.15rem !important;
+    width: 100% !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background: #333 !important;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Footer Register */
+#kc-registration {
+    margin-top: 45px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+#kc-registration a {
+    color: var(--primary);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Hide Industrial Elements */
+#kc-logo,
+#kc-info,
+.alert {
+    display: none !important;
+}

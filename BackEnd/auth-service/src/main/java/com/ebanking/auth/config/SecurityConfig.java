@@ -34,6 +34,19 @@ public class SecurityConfig {
     }
 
     @Bean
+    public org.springframework.security.oauth2.jwt.JwtDecoder jwtDecoder(
+            org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties properties) {
+        String jwkSetUri = properties.getJwt().getJwkSetUri();
+        org.springframework.security.oauth2.jwt.NimbusJwtDecoder jwtDecoder = org.springframework.security.oauth2.jwt.NimbusJwtDecoder
+                .withJwkSetUri(jwkSetUri).build();
+
+        org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator<org.springframework.security.oauth2.jwt.Jwt> validator = new org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator<>(
+                new org.springframework.security.oauth2.jwt.JwtTimestampValidator());
+        jwtDecoder.setJwtValidator(validator);
+        return jwtDecoder;
+    }
+
+    @Bean
     public org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter jwtAuthenticationConverter() {
         org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter converter = new org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter();
         converter.setJwtGrantedAuthoritiesConverter(new KeycloakJwtAuthenticationConverter());

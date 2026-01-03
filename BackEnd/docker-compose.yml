@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   keycloak:
@@ -14,6 +13,7 @@ services:
       - --import-realm
     volumes:
       - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./keycloak-theme/capitalis:/opt/keycloak/themes/capitalis:ro
 
   auth-service:
     build: ./auth-service
@@ -21,7 +21,6 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/realms/ebanking-realm
       - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak:8080/realms/ebanking-realm/protocol/openid-connect/certs
     depends_on:
       - keycloak
@@ -48,11 +47,22 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/user_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=nouveaumdp
-      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/realms/ebanking-realm
       - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak:8080/realms/ebanking-realm/protocol/openid-connect/certs
     depends_on:
       - keycloak
       - postgres
+
+  gateway-service:
+    build: ./gateway-service
+    container_name: ebanking-gateway-service
+    ports:
+      - "4000:4000"
+    environment:
+      - AUTH_SERVICE_URL=http://auth-service:8081
+      - USER_SERVICE_URL=http://user-service:8082
+    depends_on:
+      - auth-service
+      - user-service
 
 volumes:
   postgres_data:
