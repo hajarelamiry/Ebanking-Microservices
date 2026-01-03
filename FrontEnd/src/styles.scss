@@ -1,0 +1,79 @@
+// Variables Capitalis Noir & White
+$primary: #000000; // Noir Profond
+$dark: #1C1C1E;
+$bg-light: #F4F4F9; // Soft Grey/Blue background
+$white: #FFFFFF;
+
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  background-color: $bg-light;
+  color: $dark;
+  font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+.bg-primary {
+  background-color: $primary !important;
+  color: white !important;
+}
+
+.btn-primary {
+  background-color: $primary;
+  border-color: $primary;
+  color: white;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 14px 28px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #333333;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.card {
+  border-radius: 35px;
+  border: none;
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08) !important;
+  }
+}
+
+.text-primary {
+  color: $primary !important;
+}
+
+.bg-dark-card {
+  background-color: $primary !important;
+  color: white !important;
+}
+
+/* Custom Noir Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-light;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CCCCCC;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999999;
+}

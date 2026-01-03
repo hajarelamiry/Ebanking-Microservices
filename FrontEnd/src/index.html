@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Capitalis - Votre capital, notre priorité</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <app-root>
+    <div
+      style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F4F4F9; color: #000;">
+      <!-- Minimal Logo Bar Symbol -->
+      <div style="width: 40px; height: 8px; background: #000; margin-bottom: 6px; border-radius: 4px;"></div>
+      <div style="width: 25px; height: 8px; background: #000; margin-bottom: 30px; border-radius: 4px;"></div>
+
+      <h2 style="font-weight: 800; margin-bottom: 10px; letter-spacing: -1.5px; font-size: 2.2rem;">Capitalis</h2>
+      <div style="display: flex; gap: 5px; margin-bottom: 20px;">
+        <div style="width: 10px; height: 10px; background: #000; border-radius: 50%; animation: pulse 1.5s infinite;">
+        </div>
+        <div
+          style="width: 10px; height: 10px; background: #000; border-radius: 50%; animation: pulse 1.5s infinite 0.2s; opacity: 0.5;">
+        </div>
+        <div
+          style="width: 10px; height: 10px; background: #000; border-radius: 50%; animation: pulse 1.5s infinite 0.4s; opacity: 0.2;">
+        </div>
+      </div>
+      <p style="color: #8E8E93; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">
+        Initialisation sécurisée</p>
+
+      <style>
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+            opacity: 1;
+          }
+
+          50% {
+            transform: scale(1.5);
+            opacity: 0.5;
+          }
+
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+      </style>
+    </div>
+  </app-root>
+</body>
+
+</html>
