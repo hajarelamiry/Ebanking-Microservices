@@ -1,6 +1,6 @@
 package com.ebanking.user.dto;
 
-import com.ebanking.user.model.KYCStatus;
+import com.ebanking.user.entity.Customer.KycStatus;
 import lombok.Data;
 
 public class CustomerDTOs {
@@ -16,6 +16,6 @@ public class CustomerDTOs {
 
     @Data
     public static class UpdateKYCRequest {
-        private KYCStatus status;
+        private KycStatus status;
     }
 }

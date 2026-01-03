@@ -1,7 +1,7 @@
 package com.ebanking.user.service;
 
-import com.ebanking.user.model.Customer;
-import com.ebanking.user.model.KYCStatus;
+import com.ebanking.user.entity.Customer;
+import com.ebanking.user.entity.Customer.KycStatus;
 import com.ebanking.user.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class CustomerService {
         if (customerRepository.findByUsername(customer.getUsername()).isPresent()) {
             throw new RuntimeException("Customer already exists");
         }
-        customer.setKycStatus(KYCStatus.PENDING);
+        customer.setKycStatus(KycStatus.PENDING);
         customer.setRgpdConsent(true); // Default consent for demo
         return customerRepository.save(customer);
     }
@@ -43,7 +43,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer updateKYC(Long id, KYCStatus status) {
+    public Customer updateKYC(Long id, KycStatus status) {
         Customer customer = getCustomerById(id);
         customer.setKycStatus(status);
         return customerRepository.save(customer);
