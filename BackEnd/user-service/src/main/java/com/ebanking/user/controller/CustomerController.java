@@ -1,6 +1,6 @@
 package com.ebanking.user.controller;
 
-import com.ebanking.user.model.Customer;
+import com.ebanking.user.entity.Customer;
 import com.ebanking.user.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

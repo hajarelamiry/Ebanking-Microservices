@@ -20,6 +20,9 @@ public class Customer {
     @Column(unique = true, nullable = false)
     private String keycloakId;
 
+    @Column(unique = true)
+    private String username;
+
     private String firstName;
     private String lastName;
     private String email;
@@ -30,6 +33,14 @@ public class Customer {
     private KycStatus kycStatus;
 
     private String kycDocumentUrl;
+
+    private boolean rgpdConsent;
+
+    @org.hibernate.annotations.CreationTimestamp
+    private java.time.LocalDateTime createdAt;
+
+    @org.hibernate.annotations.UpdateTimestamp
+    private java.time.LocalDateTime updatedAt;
 
     public enum KycStatus {
         PENDING, SUBMITTED, VALIDATED, REJECTED

@@ -251,8 +251,8 @@ services:
   # Auth Service
   auth-service:
     build:
-      context: ./auth-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./auth-service/Dockerfile
     container_name: ebanking-auth-service
     ports:
       - "8081:8081"
@@ -284,10 +284,16 @@ services:
       - SERVER_PORT=8082
       - SPRING_DATASOURCE_URL=jdbc:postgresql://user-db:5432/user-service
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=nouveaumdp
+      - SPRING_DATASOURCE_PASSWORD=root
       - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/realms/ebanking-realm
       - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak:8080/realms/ebanking-realm/protocol/openid-connect/certs
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - KEYCLOAK_ADMIN_SERVER_URL=http://keycloak:8080
+      - KEYCLOAK_ADMIN_REALM=master
+      - KEYCLOAK_ADMIN_USERNAME=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KEYCLOAK_TARGET_REALM=ebanking-realm
+      - KEYCLOAK_TARGET_CLIENT_ID=admin-cli
     depends_on:
       eureka-server:
         condition: service_healthy
