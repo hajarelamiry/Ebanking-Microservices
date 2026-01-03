@@ -1,0 +1,321 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< com.ebanking:user-service >----------------------
+[INFO] Building user-service 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.1:run (default-cli) > test-compile @ user-service >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ user-service ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ user-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ user-service ---
+[INFO] skip non existing resourceDirectory C:\Users\saida\Desktop\Ebanking\user-service\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ user-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.2.1:run (default-cli) < test-compile @ user-service <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.1:run (default-cli) @ user-service ---
+[INFO] Attaching agents: []
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-02T23:21:51.127+01:00  INFO 2344 --- [user-service] [           main] c.ebanking.user.UserServiceApplication   : Starting UserServiceApplication using Java 17.0.12 with PID 2344 (C:\Users\saida\Desktop\Ebanking\user-service\target\classes started by saida in C:\Users\saida\Desktop\Ebanking\user-service)
+2026-01-02T23:21:51.131+01:00  INFO 2344 --- [user-service] [           main] c.ebanking.user.UserServiceApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-02T23:21:53.088+01:00  INFO 2344 --- [user-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-02T23:21:53.715+01:00  INFO 2344 --- [user-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 605 ms. Found 2 JPA repository interfaces.
+2026-01-02T23:21:55.697+01:00  INFO 2344 --- [user-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+2026-01-02T23:21:55.732+01:00  INFO 2344 --- [user-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-02T23:21:55.733+01:00  INFO 2344 --- [user-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-02T23:21:55.930+01:00  INFO 2344 --- [user-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-02T23:21:55.933+01:00  INFO 2344 --- [user-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4584 ms
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2026-01-02T23:21:56.306+01:00  INFO 2344 --- [user-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-02T23:21:56.365+01:00  INFO 2344 --- [user-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-02T23:21:56.407+01:00  INFO 2344 --- [user-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-02T23:21:56.814+01:00  INFO 2344 --- [user-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-02T23:21:56.892+01:00  INFO 2344 --- [user-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-02T23:21:57.277+01:00  INFO 2344 --- [user-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@56cd5d76
+2026-01-02T23:21:57.280+01:00  INFO 2344 --- [user-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-02T23:21:57.344+01:00  WARN 2344 --- [user-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-02T23:21:58.783+01:00  INFO 2344 --- [user-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-02T23:21:58.907+01:00  INFO 2344 --- [user-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-02T23:21:59.960+01:00  WARN 2344 --- [user-service] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-02T23:21:59.991+01:00 DEBUG 2344 --- [user-service] [           main] swordEncoderAuthenticationManagerBuilder : No authenticationProviders and no parentAuthenticationManager defined. Returning null.
+2026-01-02T23:22:00.930+01:00  INFO 2344 --- [user-service] [           main] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-01-02T23:22:01.229+01:00  INFO 2344 --- [user-service] [           main] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Skipped types: []
+2026-01-02T23:22:01.254+01:00  INFO 2344 --- [user-service] [           main] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2026-01-02T23:22:01.692+01:00  INFO 2344 --- [user-service] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@f61f06e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@437ac2dc, org.springframework.security.web.context.SecurityContextHolderFilter@61a369cf, org.springframework.security.web.header.HeaderWriterFilter@70c3c5d7, org.springframework.web.filter.CorsFilter@3de507af, org.springframework.security.web.authentication.logout.LogoutFilter@a49cdd6, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@7b80ac30, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@65bc50c9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7b381066, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@349504d5, org.springframework.security.web.session.SessionManagementFilter@280cb0b4, org.springframework.security.web.access.ExceptionTranslationFilter@36e8fefe, org.springframework.security.web.access.intercept.AuthorizationFilter@ae49f31]
+2026-01-02T23:22:02.220+01:00  INFO 2344 --- [user-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path ''
+2026-01-02T23:22:02.231+01:00  INFO 2344 --- [user-service] [           main] c.ebanking.user.UserServiceApplication   : Started UserServiceApplication in 11.899 seconds (process running for 12.463)
+2026-01-02T23:22:48.282+01:00  INFO 2344 --- [user-service] [nio-8082-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-02T23:22:48.282+01:00  INFO 2344 --- [user-service] [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-02T23:22:48.289+01:00  INFO 2344 --- [user-service] [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2026-01-02T23:22:48.435+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /graphiql?path=/graphql
+2026-01-02T23:22:48.460+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-01-02T23:22:48.460+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-2] o.s.s.w.session.SessionManagementFilter  : Request requested invalid session id D8A73C8D653D29F33B12F37B03338F16
+2026-01-02T23:22:48.468+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /graphiql?path=/graphql
+2026-01-02T23:22:49.813+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /favicon.ico
+2026-01-02T23:22:49.815+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-01-02T23:22:49.816+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] o.s.s.w.session.SessionManagementFilter  : Request requested invalid session id D8A73C8D653D29F33B12F37B03338F16
+2026-01-02T23:23:30.044+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:23:30.488+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.s.o.s.r.a.JwtAuthenticationProvider  : Authenticated token
+2026-01-02T23:23:30.491+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] .s.r.w.a.BearerTokenAuthenticationFilter : Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@2ed7921d, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_AGENT]]
+2026-01-02T23:23:30.494+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:23:31.144+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.users(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+2026-01-02T23:23:31.199+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.users(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+--- Users Query Started in User-Service ---
+Hibernate: select c1_0.id,c1_0.address,c1_0.email,c1_0.first_name,c1_0.keycloak_id,c1_0.kyc_document_url,c1_0.kyc_status,c1_0.last_name,c1_0.phone_number from customers c1_0
+--- Users Query Success in User-Service (count: 5) ---
+2026-01-02T23:23:31.783+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:23:31.784+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:23:35.218+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:23:35.232+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-4] o.s.s.o.s.r.a.JwtAuthenticationProvider  : Authenticated token
+2026-01-02T23:23:35.233+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-4] .s.r.w.a.BearerTokenAuthenticationFilter : Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@2ed7921d, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_AGENT]]
+2026-01-02T23:23:35.233+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:23:35.240+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-4] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.users(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+2026-01-02T23:23:35.240+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-4] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.users(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+--- Users Query Started in User-Service ---
+Hibernate: select c1_0.id,c1_0.address,c1_0.email,c1_0.first_name,c1_0.keycloak_id,c1_0.kyc_document_url,c1_0.kyc_status,c1_0.last_name,c1_0.phone_number from customers c1_0
+--- Users Query Success in User-Service (count: 5) ---
+2026-01-02T23:23:35.268+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:23:35.269+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:23:49.330+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:23:49.343+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-7] o.s.s.o.s.r.a.JwtAuthenticationProvider  : Authenticated token
+2026-01-02T23:23:49.344+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-7] .s.r.w.a.BearerTokenAuthenticationFilter : Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@2ed7921d, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_AGENT]]
+2026-01-02T23:23:49.345+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:23:49.471+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-7] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.ebanking.user.entity.UserCreationRequest com.ebanking.user.controller.CustomerGraphQLController.requestUserCreation(java.util.Map,org.springframework.security.oauth2.jwt.Jwt); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+2026-01-02T23:23:49.472+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-7] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.ebanking.user.entity.UserCreationRequest com.ebanking.user.controller.CustomerGraphQLController.requestUserCreation(java.util.Map,org.springframework.security.oauth2.jwt.Jwt); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+--- RequestUserCreation Mutation Started in User-Service ---
+Input: {firstName=saida, lastName=elh, email=saida.hourani12@gmail.com}
+Hibernate: insert into user_creation_requests (agent_id,created_at,email,first_name,last_name,processed_at,status) values (?,?,?,?,?,?,?)
+--- RequestUserCreation Mutation Success in User-Service ---
+2026-01-02T23:23:49.651+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:23:49.653+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:23:57.508+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:23:57.519+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-9] o.s.s.o.s.r.a.JwtAuthenticationProvider  : Authenticated token
+2026-01-02T23:23:57.520+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-9] .s.r.w.a.BearerTokenAuthenticationFilter : Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@2ed7921d, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_AGENT]]
+2026-01-02T23:23:57.521+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:23:57.527+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-9] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.users(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+2026-01-02T23:23:57.528+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-9] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.users(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+--- Users Query Started in User-Service ---
+Hibernate: select c1_0.id,c1_0.address,c1_0.email,c1_0.first_name,c1_0.keycloak_id,c1_0.kyc_document_url,c1_0.kyc_status,c1_0.last_name,c1_0.phone_number from customers c1_0
+--- Users Query Success in User-Service (count: 5) ---
+2026-01-02T23:23:57.569+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:23:57.570+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:24:18.305+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:24:18.307+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:24:18.368+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] o.s.s.o.s.r.a.JwtAuthenticationProvider  : Authenticated token
+2026-01-02T23:24:18.374+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] .s.r.w.a.BearerTokenAuthenticationFilter : Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@a2bc9217, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ADMIN]]
+2026-01-02T23:24:18.382+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:24:18.386+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.s.o.s.r.a.JwtAuthenticationProvider  : Authenticated token
+2026-01-02T23:24:18.391+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] .s.r.w.a.BearerTokenAuthenticationFilter : Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@a2bc9217, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ADMIN]]
+2026-01-02T23:24:18.392+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:24:18.437+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.users(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+2026-01-02T23:24:18.438+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.users(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+--- Users Query Started in User-Service ---
+2026-01-02T23:24:18.444+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.pendingRequests(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+2026-01-02T23:24:18.448+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.ebanking.user.controller.CustomerGraphQLController.pendingRequests(); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+--- PendingRequests Query Started in User-Service ---
+Hibernate: select c1_0.id,c1_0.address,c1_0.email,c1_0.first_name,c1_0.keycloak_id,c1_0.kyc_document_url,c1_0.kyc_status,c1_0.last_name,c1_0.phone_number from customers c1_0
+--- Users Query Success in User-Service (count: 5) ---
+2026-01-02T23:24:18.494+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:24:18.497+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+Hibernate: select ucr1_0.id,ucr1_0.agent_id,ucr1_0.created_at,ucr1_0.email,ucr1_0.first_name,ucr1_0.last_name,ucr1_0.processed_at,ucr1_0.status from user_creation_requests ucr1_0 where ucr1_0.status=?
+--- PendingRequests Query Success in User-Service (count: 1) ---
+2026-01-02T23:24:18.609+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:24:18.610+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:24:39.673+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:24:39.687+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-1] o.s.s.o.s.r.a.JwtAuthenticationProvider  : Authenticated token
+2026-01-02T23:24:39.687+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-1] .s.r.w.a.BearerTokenAuthenticationFilter : Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@a2bc9217, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ADMIN]]
+2026-01-02T23:24:39.688+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /graphql
+2026-01-02T23:24:39.729+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-1] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.ebanking.user.entity.UserCreationRequest com.ebanking.user.controller.CustomerGraphQLController.processUserCreation(java.lang.Long,java.lang.String,java.lang.String); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+2026-01-02T23:24:39.732+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-1] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.ebanking.user.entity.UserCreationRequest com.ebanking.user.controller.CustomerGraphQLController.processUserCreation(java.lang.Long,java.lang.String,java.lang.String); target is of class [com.ebanking.user.controller.CustomerGraphQLController]
+Hibernate: select ucr1_0.id,ucr1_0.agent_id,ucr1_0.created_at,ucr1_0.email,ucr1_0.first_name,ucr1_0.last_name,ucr1_0.processed_at,ucr1_0.status from user_creation_requests ucr1_0 where ucr1_0.id=?
+Hibernate: insert into customers (address,email,first_name,keycloak_id,kyc_document_url,kyc_status,last_name,phone_number) values (?,?,?,?,?,?,?,?)
+Hibernate: update user_creation_requests set agent_id=?,created_at=?,email=?,first_name=?,last_name=?,processed_at=?,status=? where id=?
+2026-01-02T23:24:44.646+01:00 ERROR 2344 --- [user-service] [nio-8082-exec-1] s.g.e.ExceptionResolversExceptionHandler : Unresolved MailAuthenticationException for executionId 7276f176-027c-3e02-d149-739a1a582a19
+
+org.springframework.mail.MailAuthenticationException: Authentication failed
+	at org.springframework.mail.javamail.JavaMailSenderImpl.doSend(JavaMailSenderImpl.java:402) ~[spring-context-support-6.1.2.jar:6.1.2]
+	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:317) ~[spring-context-support-6.1.2.jar:6.1.2]
+	at org.springframework.mail.MailSender.send(MailSender.java:42) ~[spring-context-support-6.1.2.jar:6.1.2]
+	at com.ebanking.user.service.EmailService.sendCredentials(EmailService.java:27) ~[classes/:na]
+	at com.ebanking.user.controller.CustomerGraphQLController.processUserCreation(CustomerGraphQLController.java:197) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:352) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:765) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.invoke(AuthorizationManagerBeforeMethodInterceptor.java:198) ~[spring-security-core-6.2.1.jar:6.2.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:765) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:717) ~[spring-aop-6.1.2.jar:6.1.2]
+	at com.ebanking.user.controller.CustomerGraphQLController$$SpringCGLIB$$0.processUserCreation(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.graphql.data.method.InvocableHandlerMethodSupport.doInvoke(InvocableHandlerMethodSupport.java:87) ~[spring-graphql-1.2.4.jar:1.2.4]
+	at org.springframework.graphql.data.method.annotation.support.DataFetcherHandlerMethod.validateAndInvoke(DataFetcherHandlerMethod.java:196) ~[spring-graphql-1.2.4.jar:1.2.4]
+	at org.springframework.graphql.data.method.annotation.support.DataFetcherHandlerMethod.invoke(DataFetcherHandlerMethod.java:126) ~[spring-graphql-1.2.4.jar:1.2.4]
+	at org.springframework.graphql.data.method.annotation.support.DataFetcherHandlerMethod.invoke(DataFetcherHandlerMethod.java:107) ~[spring-graphql-1.2.4.jar:1.2.4]
+	at org.springframework.graphql.data.method.annotation.support.AnnotatedControllerConfigurer$SchemaMappingDataFetcher.get(AnnotatedControllerConfigurer.java:680) ~[spring-graphql-1.2.4.jar:1.2.4]
+	at org.springframework.graphql.execution.ContextDataFetcherDecorator.lambda$get$0(ContextDataFetcherDecorator.java:87) ~[spring-graphql-1.2.4.jar:1.2.4]
+	at io.micrometer.context.ContextSnapshot.lambda$wrap$1(ContextSnapshot.java:106) ~[context-propagation-1.0.6.jar:1.0.6]
+	at org.springframework.graphql.execution.ContextDataFetcherDecorator.get(ContextDataFetcherDecorator.java:87) ~[spring-graphql-1.2.4.jar:1.2.4]
+	at graphql.execution.instrumentation.dataloader.DataLoaderDispatcherInstrumentation.lambda$instrumentDataFetcher$0(DataLoaderDispatcherInstrumentation.java:90) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.ExecutionStrategy.invokeDataFetcher(ExecutionStrategy.java:311) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.ExecutionStrategy.fetchField(ExecutionStrategy.java:287) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.ExecutionStrategy.resolveFieldWithInfo(ExecutionStrategy.java:213) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.ExecutionStrategy.resolveField(ExecutionStrategy.java:185) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.AsyncSerialExecutionStrategy.lambda$execute$1(AsyncSerialExecutionStrategy.java:47) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.Async.eachSequentiallyImpl(Async.java:162) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.Async.eachSequentially(Async.java:151) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.AsyncSerialExecutionStrategy.execute(AsyncSerialExecutionStrategy.java:42) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.Execution.executeOperation(Execution.java:161) ~[graphql-java-21.3.jar:na]
+	at graphql.execution.Execution.execute(Execution.java:103) ~[graphql-java-21.3.jar:na]
+	at graphql.GraphQL.execute(GraphQL.java:568) ~[graphql-java-21.3.jar:na]
+	at graphql.GraphQL.lambda$parseValidateAndExecute$13(GraphQL.java:487) ~[graphql-java-21.3.jar:na]
+	at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1187) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2309) ~[na:na]
+	at graphql.GraphQL.parseValidateAndExecute(GraphQL.java:482) ~[graphql-java-21.3.jar:na]
+	at graphql.GraphQL.lambda$executeAsync$9(GraphQL.java:440) ~[graphql-java-21.3.jar:na]
+	at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1187) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2309) ~[na:na]
+	at graphql.GraphQL.executeAsync(GraphQL.java:428) ~[graphql-java-21.3.jar:na]
+	at org.springframework.graphql.execution.DefaultExecutionGraphQlService.lambda$execute$2(DefaultExecutionGraphQlService.java:84) ~[spring-graphql-1.2.4.jar:1.2.4]
+	at reactor.core.publisher.MonoDeferContextual.subscribe(MonoDeferContextual.java:47) ~[reactor-core-3.6.1.jar:3.6.1]
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4512) ~[reactor-core-3.6.1.jar:3.6.1]
+	at reactor.core.publisher.Mono.subscribeWith(Mono.java:4578) ~[reactor-core-3.6.1.jar:3.6.1]
+	at reactor.core.publisher.Mono.toFuture(Mono.java:5090) ~[reactor-core-3.6.1.jar:3.6.1]
+	at org.springframework.core.ReactiveAdapterRegistry$ReactorRegistrar.lambda$registerAdapters$5(ReactiveAdapterRegistry.java:290) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.core.ReactiveAdapter.fromPublisher(ReactiveAdapter.java:121) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.function.DefaultAsyncServerResponse.create(DefaultAsyncServerResponse.java:186) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.function.ServerResponse.async(ServerResponse.java:249) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.graphql.server.webmvc.GraphQlHttpHandler.handleRequest(GraphQlHttpHandler.java:111) ~[spring-graphql-1.2.4.jar:1.2.4]
+	at org.springframework.web.servlet.function.support.HandlerFunctionAdapter.handle(HandlerFunctionAdapter.java:107) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter.doFilterInternal(BearerTokenAuthenticationFilter.java:145) ~[spring-security-oauth2-resource-server-6.2.1.jar:6.2.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.2.1.jar:6.2.1]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:225) ~[spring-security-config-6.2.1.jar:6.2.1]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+Caused by: jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-47d6d465e6csm4438295e9.15 - gsmtp
+
+	at org.eclipse.angus.mail.smtp.SMTPTransport$Authenticator.authenticate(SMTPTransport.java:954) ~[jakarta.mail-2.0.2.jar:na]
+	at org.eclipse.angus.mail.smtp.SMTPTransport.authenticate(SMTPTransport.java:865) ~[jakarta.mail-2.0.2.jar:na]
+	at org.eclipse.angus.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:769) ~[jakarta.mail-2.0.2.jar:na]
+	at jakarta.mail.Service.connect(Service.java:345) ~[jakarta.mail-2.0.2.jar:na]
+	at org.springframework.mail.javamail.JavaMailSenderImpl.connectTransport(JavaMailSenderImpl.java:480) ~[spring-context-support-6.1.2.jar:6.1.2]
+	at org.springframework.mail.javamail.JavaMailSenderImpl.doSend(JavaMailSenderImpl.java:399) ~[spring-context-support-6.1.2.jar:6.1.2]
+	... 150 common frames omitted
+
+2026-01-02T23:24:44.738+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /graphql
+2026-01-02T23:24:44.741+01:00 DEBUG 2344 --- [user-service] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /graphql

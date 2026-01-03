@@ -4,9 +4,19 @@
 
 # Maven
 target/
+out/
+
+# Node
+node_modules/
+.angular/
+dist/
 
 # Logs
 *.log
 
 # OS
 .DS_Store
+Thumbs.db
+
+# Documentation
+*.md

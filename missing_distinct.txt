@@ -1,0 +1,10 @@
+BackEnd/crypto-service/src/main/java/com/example/demo/config/KafkaConfig.java
+BackEnd/crypto-service/src/main/java/com/example/demo/model/OutboxEvent.java
+BackEnd/crypto-service/src/main/java/com/example/demo/repository/OutboxEventRepository.java
+BackEnd/crypto-service/src/main/java/com/example/demo/service/EventPublisher.java
+BackEnd/crypto-service/src/main/java/com/example/demo/service/OutboxRelay.java
+BackEnd/payment-service/src/main/java/com/example/payment_service/config/KafkaConfig.java
+BackEnd/payment-service/src/main/java/com/example/payment_service/model/OutboxEvent.java
+BackEnd/payment-service/src/main/java/com/example/payment_service/repository/OutboxEventRepository.java
+BackEnd/payment-service/src/main/java/com/example/payment_service/service/EventPublisher.java
+BackEnd/payment-service/src/main/java/com/example/payment_service/service/OutboxRelay.java

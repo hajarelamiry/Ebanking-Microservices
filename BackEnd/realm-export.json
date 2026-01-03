@@ -1,6 +1,7 @@
 {
   "id": "ebanking-realm",
   "realm": "ebanking-realm",
+  "loginTheme": "capitalis",
   "enabled": true,
   "roles": {
     "realm": [
@@ -78,7 +79,13 @@
       "enabled": true,
       "publicClient": true,
       "directAccessGrantsEnabled": true,
-      "standardFlowEnabled": true
+      "standardFlowEnabled": true,
+      "redirectUris": [
+        "http://localhost:4200/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4200"
+      ]
     }
   ]
 }

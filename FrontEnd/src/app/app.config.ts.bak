@@ -1,0 +1,56 @@
+import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () => {
+    console.log('Intializing Keycloak...');
+    return keycloak.init({
+      config: {
+        url: 'http://localhost:8080',
+        realm: 'ebanking-realm',
+        clientId: 'ebanking-client',
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/silent-check-sso.html',
+      },
+    }).then(success => {
+      console.log('Keycloak init successful:', success);
+    }).catch(err => {
+      console.error('Keycloak init failed:', err);
+    });
+  }
+}
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(withInterceptorsFromDi()),
+    importProvidersFrom(KeycloakAngularModule),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:4000/graphql',
+          }),
+        };
+      },
+      deps: [HttpLink],
+    },
+  ],
+};

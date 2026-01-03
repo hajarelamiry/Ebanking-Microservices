@@ -8,7 +8,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
+        jwt:
           issuer-uri: http://localhost:8080/realms/ebanking-realm
+          jwk-set-uri: http://keycloak:8080/realms/ebanking-realm/protocol/openid-connect/certs
 eureka:
   client:
     service-url:

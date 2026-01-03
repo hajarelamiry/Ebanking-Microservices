@@ -1,0 +1,72 @@
+type Query {
+    me: Customer
+    users: [Customer]
+    pendingRequests: [UserCreationRequest]
+}
+
+type Mutation {
+    updateProfile(input: ProfileInput!): Customer
+    submitKyc(documentUrl: String!): Customer
+    validateKyc(id: ID!): Customer
+    createCustomer(input: CreateCustomerInput!): Customer
+    deleteUser(id: ID!): Boolean
+    
+    requestUserCreation(input: UserRequestInput!): UserCreationRequest
+    processUserCreation(id: ID!, status: RequestStatus!, reason: String): UserCreationRequest
+    onboardUser(input: UserRequestInput!): Customer
+}
+
+input UserRequestInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+}
+
+type UserCreationRequest {
+    id: ID
+    firstName: String
+    lastName: String
+    email: String
+    status: RequestStatus
+    agentId: String
+    createdAt: String
+}
+
+enum RequestStatus {
+    PENDING
+    APPROVED
+    REJECTED
+}
+
+input CreateCustomerInput {
+    keycloakId: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+}
+
+type Customer {
+    id: ID
+    keycloakId: String
+    firstName: String
+    lastName: String
+    email: String
+    phoneNumber: String
+    address: String
+    kycStatus: KycStatus
+    kycDocumentUrl: String
+}
+
+input ProfileInput {
+    firstName: String
+    lastName: String
+    phoneNumber: String
+    address: String
+}
+
+enum KycStatus {
+    PENDING
+    SUBMITTED
+    VALIDATED
+    REJECTED
+}
